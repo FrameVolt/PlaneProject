@@ -14,10 +14,10 @@ public class TankEnemy : EnemyBase
     [SerializeField]
     private GameObject explosionFX;
 
-    private float MaxX;
-    private float MinX;
-    private float MaxY;
-    private float MinY;
+    private float maxX;
+    private float minX;
+    private float maxY;
+    private float minY;
     private Vector3 direction;
 
     private MainAirplane mainPlane;
@@ -25,21 +25,21 @@ public class TankEnemy : EnemyBase
     private void Start()
     {
         InvokeRepeating("Fire", 0f, repeatRate);
-        MaxX = ScreenXY.MaxX;
-        MinX = ScreenXY.MinX;
-        MaxY = ScreenXY.MaxY;
-        MinY = ScreenXY.MinY;
+        maxX = ScreenXY.MaxX;
+        minX = ScreenXY.MinX;
+        maxY = ScreenXY.MaxY;
+        minY = ScreenXY.MinY;
         direction = Vector3.left;
     }
 
 
     private void Update()
     {
-        if (transform.position.x > MaxX)
+        if (transform.position.x > maxX)
         {
             direction = Vector3.left;
         }
-        else if (transform.position.x < MinX)
+        else if (transform.position.x < minX)
         {
             direction = Vector3.right;
         }
