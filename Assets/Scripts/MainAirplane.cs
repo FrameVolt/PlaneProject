@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class MainAirplane : MonoBehaviour, IHealth
 {
-    
-
     [SerializeField]
     private float speed = 1f;
     [SerializeField]
