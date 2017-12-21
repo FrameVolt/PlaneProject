@@ -11,6 +11,8 @@ public class MainAirplane : MonoBehaviour, IHealth
     private GameObject bullet;
     [SerializeField]
     private GameObject explosionFX;
+    [SerializeField]
+    private float fireRate = 0.3f;
 
     private Transform trans;
     private Vector3 vectorSpeed;
@@ -22,6 +24,7 @@ public class MainAirplane : MonoBehaviour, IHealth
     private float MinY;
     private int health = 100;
     private Collider2D coll;
+    private float fireTimer;
 
     public delegate void OnDead();
     public event OnDead OnDeadEvent;
@@ -50,14 +53,30 @@ public class MainAirplane : MonoBehaviour, IHealth
 
     private void Update()
     {
+        
         if (Input.GetButtonDown("Fire1"))
         {
-            Fire();
+            FireOnce();
         }
-
+        if (Input.GetButton("Fire1"))
+        {
+            FireStart();
+        }
+        
         ClampFrame();
     }
-    
+
+    private void FireStart()
+    {
+        if (health <= 0) return;
+
+        fireTimer += Time.deltaTime;
+        if (fireTimer > fireRate)
+        {
+            Instantiate(bullet, trans.position, Quaternion.identity);
+            fireTimer = 0; 
+        }
+    }
 
     private void FixedUpdate()
     {
@@ -86,9 +105,12 @@ public class MainAirplane : MonoBehaviour, IHealth
     {
         rig.velocity = direction * speed;
     }
-    private void Fire()
+    private void FireOnce()
     {
+        if (health <= 0) return;
         Instantiate(bullet, trans.position, Quaternion.identity);
+
+        fireTimer = 0;
     }
 
    

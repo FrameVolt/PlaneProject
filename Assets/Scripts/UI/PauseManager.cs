@@ -24,6 +24,7 @@ public class PauseManager : MonoBehaviour
     {
         canvasGroupList.Add(pauseGroup);
         canvasGroupList.Add(settingGroup);
+        DisplayMenu();
     }
 
     private void Update()
