@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -10,7 +11,7 @@ using UnityEditor;
 
 public class PauseManager : MonoBehaviour
 {
-
+    [SerializeField] private string loadSceneName;
     [SerializeField] private AudioMixerSnapshot paused, unpaused;
     [SerializeField] private CanvasGroup pauseGroup;
     [SerializeField] private CanvasGroup settingGroup;
@@ -37,7 +38,7 @@ public class PauseManager : MonoBehaviour
 
     private void Lowpass()
     {
-        if (Time.timeScale == 0)
+        if (GameManager.Instance.TimeScale == 0)
         {
             paused.TransitionTo(.01f);
         }
@@ -77,13 +78,19 @@ public class PauseManager : MonoBehaviour
 
     public void Exit()
     {
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#else
-		Application.Quit();
-#endif
+        //#if UNITY_EDITOR
+        //        EditorApplication.isPlaying = false;
+        //#else
+        //		Application.Quit();
+        //#endif
+        UIManager.Instance.FaderOn(true, 1f);
+        StartCoroutine(StartLevel());
     }
-
+    private IEnumerator StartLevel()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(loadSceneName);
+    }
     private void DisplayMenu()
     {
         foreach (var item in canvasGroupList)
@@ -102,8 +109,7 @@ public class PauseManager : MonoBehaviour
         }
 
         
-        Time.timeScale = isPaused ? 0 : 1;
-
+        GameManager.Instance.SetTimeScale(isPaused ? 0 : 1);
         Lowpass();
 
     }

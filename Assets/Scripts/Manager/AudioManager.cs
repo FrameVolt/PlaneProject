@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : Singleton<AudioManager>
+public class AudioManager : PersistentSingleton<AudioManager>
 {
     [SerializeField]
     private GameSetting gameSetting;
@@ -18,6 +18,8 @@ public class AudioManager : Singleton<AudioManager>
         base.Awake();
         musicValume = gameSetting.musicValume;
         effectValume = gameSetting.effectValume;
+        mixer.SetFloat("music", musicValume);
+        mixer.SetFloat("effect", effectValume);
     }
 
     public float MusicValume {

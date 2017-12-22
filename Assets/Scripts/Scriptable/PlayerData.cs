@@ -6,6 +6,4 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public int maxScore;
-    public int MusicValume;
-    public int EffectValume;
 }

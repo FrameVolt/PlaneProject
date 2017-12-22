@@ -43,6 +43,8 @@ public class LevelDirector : Singleton<LevelDirector>
     private void Start () {
         if (GameStartAction != null)
             GameStartAction();
+        if (UIManager.Instance != null)
+            UIManager.Instance.FaderOn(false, 1f);
         StartCoroutine(Decorate());
     }
     #endregion
