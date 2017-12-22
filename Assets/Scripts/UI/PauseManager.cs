@@ -83,6 +83,7 @@ public class PauseManager : MonoBehaviour
         //#else
         //		Application.Quit();
         //#endif
+        Pause();
         UIManager.Instance.FaderOn(true, 1f);
         StartCoroutine(StartLevel());
     }
