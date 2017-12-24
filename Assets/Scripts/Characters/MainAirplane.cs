@@ -55,19 +55,19 @@ public class MainAirplane : MonoBehaviour, IHealth
     private void Update()
     {
         
-        if (Input.GetButtonDown("Fire1"))
-        {
-            FireOnce();
-        }
-        if (Input.GetButton("Fire1"))
-        {
-            FireStart();
-        }
+        //if (Input.GetButtonDown("Fire1"))
+        //{
+        //    FireOnce();
+        //}
+        //if (Input.GetButton("Fire1"))
+        //{
+        //    FireStart();
+        //}
         
         ClampFrame();
     }
 
-    private void FireStart()
+    public void FireStart()
     {
         if (health <= 0) return;
 
@@ -113,7 +113,7 @@ public class MainAirplane : MonoBehaviour, IHealth
     {
         rig.velocity = direction * speed;
     }
-    private void FireOnce()
+    public void FireOnce()
     {
         if (health <= 0) return;
         Instantiate(bullet, trans.position, Quaternion.identity);

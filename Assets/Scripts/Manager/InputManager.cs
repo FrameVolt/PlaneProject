@@ -15,7 +15,17 @@ public class InputManager : Singleton<InputManager>
         {
             return;
         }
+        if (GameManager.Instance.Player == null)
+            return;
 
+        if (Input.GetButtonDown("Fire1"))
+        {
+            GameManager.Instance.Player.FireOnce();
+        }
+        if (Input.GetButton("Fire1"))
+        {
+            GameManager.Instance.Player.FireStart();
+        }
         SetMovement();
     }
     public virtual void SetMovement()
@@ -28,7 +38,6 @@ public class InputManager : Singleton<InputManager>
     }
     public virtual void Esc()
     {
-        //GameManager.Instance.Pause();
         if(UIManager.Instance.PauseManager)
         UIManager.Instance.PauseManager.Esc();
     }
