@@ -6,7 +6,9 @@ public class GameManager : PersistentSingleton<GameManager>
 {
     public int GameFrameRate = 300;
     public float TimeScale { get; private set; }
-    public bool Paused { get; set; }
+    private bool paused;
+    public bool Paused { get { return paused; } set { paused = value; } }
+    public MainAirplane Player { get; set; }
 
     private float savedTimeScale = 1f;
 
@@ -22,12 +24,10 @@ public class GameManager : PersistentSingleton<GameManager>
     }
     public virtual void Pause()
     {
-        // if time is not already stopped		
-        if (Time.timeScale > 0.0f)
+       if (Time.timeScale > 0.0f)
         {
             Instance.SetTimeScale(0.0f);
             Instance.Paused = true;
-            //UIManager.Instance.SetPause(true);
         }
         else
         {
@@ -39,10 +39,6 @@ public class GameManager : PersistentSingleton<GameManager>
     {
         Instance.ResetTimeScale();
         Instance.Paused = false;
-        if (UIManager.Instance != null)
-        {
-           // UIManager.Instance.SetPause(false);
-        }
     }
     public void SetTimeScale(float newTimeScale)
     {

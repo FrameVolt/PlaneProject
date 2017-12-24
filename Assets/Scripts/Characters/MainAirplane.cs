@@ -17,7 +17,8 @@ public class MainAirplane : MonoBehaviour, IHealth
     private Transform trans;
     private Vector3 vectorSpeed;
     private Rigidbody2D rig;
-
+    protected float horizontalMove;
+    protected float verticalMove;
     private float MaxX;
     private float MinX;
     private float MaxY;
@@ -77,10 +78,17 @@ public class MainAirplane : MonoBehaviour, IHealth
             fireTimer = 0; 
         }
     }
-
+    public virtual void SetHorizontalMove(float value)
+    {
+        horizontalMove = value;
+    }
+    public virtual void SetVerticalMove(float value)
+    {
+        verticalMove = value;
+    }
     private void FixedUpdate()
     {
-        Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        Vector3 direction = new Vector3(horizontalMove, verticalMove, 0);
         Move(direction);
     }
     void OnCollisionEnter2D(Collision2D coll)

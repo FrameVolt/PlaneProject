@@ -60,6 +60,7 @@ public class LevelDirector : Singleton<LevelDirector>
     {
         yield return new WaitForSeconds(2);
         CurrentAirPlane = Instantiate(mainAirPlane, mainAirPlane.transform.position, Quaternion.identity);
+        GameManager.Instance.Player = CurrentAirPlane;
         CurrentAirPlane.OnDeadEvent += OnMainPlaneDead;
     }
 

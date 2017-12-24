@@ -7,7 +7,9 @@ public class UIManager : Singleton<UIManager>
 {
     [SerializeField]
     private Image fader;
-//    private PauseManager pauseManager;
+    [SerializeField]
+    private PauseManager pauseManager;
+    public PauseManager PauseManager { get { return pauseManager; } }
 
     protected override void Awake()
     {
@@ -16,13 +18,6 @@ public class UIManager : Singleton<UIManager>
             fader.gameObject.SetActive(false);
     }
 
-    //public virtual void SetPause(bool state)
-    //{
-    //    if (pauseManager != null)
-    //    {
-    //        pauseManager.SetActive(state);
-    //    }
-    //}
 
     public virtual void FaderOn(bool state, float duration)
     {

@@ -16,8 +16,6 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private CanvasGroup pauseGroup;
     [SerializeField] private CanvasGroup settingGroup;
 
-    private bool isPaused = false;
-    
     private Stack<CanvasGroup> canvasGroupStack = new Stack<CanvasGroup>();
     private List<CanvasGroup> canvasGroupList = new List<CanvasGroup>();
 
@@ -26,14 +24,6 @@ public class PauseManager : MonoBehaviour
         canvasGroupList.Add(pauseGroup);
         canvasGroupList.Add(settingGroup);
         DisplayMenu();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Esc();
-        }
     }
 
     private void Lowpass()
@@ -47,29 +37,40 @@ public class PauseManager : MonoBehaviour
             unpaused.TransitionTo(.01f);
         }
     }
+    
     public void Esc()
     {
-        if (!isPaused && canvasGroupStack.Count == 0)
+        if (canvasGroupStack.Count == 0)
         {
-            isPaused = !isPaused;
-            canvasGroupStack.Push(pauseGroup);
+            Pause();
         }
         else
         {
             if (canvasGroupStack.Count > 0)
+            {
                 canvasGroupStack.Pop();
+                if (canvasGroupStack.Count == 0)
+                    UnPause();
+            }
         }
-        if (canvasGroupStack.Count == 0)
-            Pause();
         DisplayMenu();
     }
     public void Pause()
     {
-        isPaused = !isPaused;
+        Lowpass();
+        GameManager.Instance.Pause();
+        canvasGroupStack.Push(pauseGroup);
+        DisplayMenu();
+    }
+    public void UnPause()
+    {
+        Lowpass();
+        GameManager.Instance.Pause();
         if (canvasGroupStack.Count > 0)
             canvasGroupStack.Pop();
         DisplayMenu();
     }
+
     public void Setting()
     {
         canvasGroupStack.Push(settingGroup);
@@ -100,7 +101,7 @@ public class PauseManager : MonoBehaviour
             item.interactable = false;
             item.blocksRaycasts = false;
         }
-        
+
         if (canvasGroupStack.Count > 0)
         {
             CanvasGroup cg = canvasGroupStack.Peek();
@@ -108,10 +109,5 @@ public class PauseManager : MonoBehaviour
             cg.interactable = true;
             cg.blocksRaycasts = true;
         }
-
-        
-        GameManager.Instance.SetTimeScale(isPaused ? 0 : 1);
-        Lowpass();
-
     }
 }
