@@ -6,55 +6,65 @@ public class TankEnemy : EnemyBase
 {
 
     [SerializeField]
-    private GameObject bulletPrefab;
+    private GameObject bulletPrefab = null;
     [SerializeField]
-    private float repeatRate;
+    private float fireRate = 1f;
     [SerializeField]
     private float speed = 1;
     [SerializeField]
-    private GameObject explosionFX;
+    private float rotateSpeed = 1;
+    [SerializeField]
+    private GameObject explosionFX = null;
+    [SerializeField]
+    private Transform barrelTrans;
+    [SerializeField]
+    private Transform fireInitPointTrans;
 
-    private float maxX;
-    private float minX;
-    private float maxY;
-    private float minY;
     private Vector3 direction;
-
+    private Vector3 fireDirection;
     private MainAirplane mainPlane;
+    private float fireTimer;
 
     private void Start()
     {
-        InvokeRepeating("Fire", 0f, repeatRate);
-        maxX = ScreenXY.MaxX;
-        minX = ScreenXY.MinX;
-        maxY = ScreenXY.MaxY;
-        minY = ScreenXY.MinY;
+        //InvokeRepeating("Fire", 0f, repeatRate);
         direction = Vector3.left;
     }
 
 
     private void Update()
     {
-        if (transform.position.x > maxX)
-        {
-            direction = Vector3.left;
-        }
-        else if (transform.position.x < minX)
-        {
-            direction = Vector3.right;
-        }
-
         Move();
+
+        if (GameManager.Instance.Player == null) return;
+        mainPlane = GameManager.Instance.Player;
+
+        fireTimer += Time.deltaTime;
+        if (fireTimer > fireRate)
+        {
+            Fire();
+            fireTimer = 0f;
+        }
+        BarrelRotate();
     }
 
     private void Move()
     {
-        transform.Translate(direction * Time.deltaTime * speed);
+        transform.Translate(direction * Time.deltaTime * speed,Space.World);
     }
 
     private void Fire()
     {
-        Instantiate(bulletPrefab, this.transform.position, Quaternion.identity);
+        Instantiate(bulletPrefab, fireInitPointTrans.position, barrelTrans.rotation);
+    }
+
+    private void BarrelRotate() {
+        fireDirection = mainPlane.transform.position - transform.position;
+        fireDirection.z = 0;
+        fireDirection = fireDirection.normalized;
+        Quaternion q = Quaternion.FromToRotation(Vector3.up, fireDirection);
+        barrelTrans.rotation = Quaternion.RotateTowards(barrelTrans.rotation, q, Time.deltaTime * rotateSpeed);
+        
     }
 
     public override void Damage(int val, GameObject initiator)

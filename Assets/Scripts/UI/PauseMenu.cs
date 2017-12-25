@@ -9,7 +9,7 @@ using UnityEditor;
 #endif
 
 
-public class PauseManager : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private string loadSceneName;
     [SerializeField] private AudioMixerSnapshot paused, unpaused;

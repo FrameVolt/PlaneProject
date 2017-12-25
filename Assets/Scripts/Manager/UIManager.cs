@@ -8,8 +8,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField]
     private Image fader;
     [SerializeField]
-    private PauseManager pauseManager;
-    public PauseManager PauseManager { get { return pauseManager; } }
+    private PauseMenu pauseMenu;
+    public PauseMenu PauseMenu { get { return pauseMenu; } }
 
     protected override void Awake()
     {

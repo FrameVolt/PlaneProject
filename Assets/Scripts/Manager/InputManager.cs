@@ -38,7 +38,7 @@ public class InputManager : Singleton<InputManager>
     }
     public virtual void Esc()
     {
-        if(UIManager.Instance.PauseManager)
-        UIManager.Instance.PauseManager.Esc();
+        if(UIManager.Instance.PauseMenu)
+        UIManager.Instance.PauseMenu.Esc();
     }
 }

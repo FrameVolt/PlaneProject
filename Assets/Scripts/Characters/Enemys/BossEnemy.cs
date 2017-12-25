@@ -62,8 +62,7 @@ public class BossEnemy : EnemyBase
     {
         for (int i = 0; i < 8; i++)
         {
-            GameObject bulletOBJ = Instantiate(bulletPrefab, this.transform.position, Quaternion.identity);
-            bulletOBJ.transform.rotation = Quaternion.Euler(0, 0, 45 * i);
+            GameObject bulletOBJ = Instantiate(bulletPrefab, this.transform.position, Quaternion.Euler(0, 0, 45 * i));
         }
     }
 
