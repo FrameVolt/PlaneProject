@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4739878511017428}
   - component: {fileID: 212839226008486812}
   - component: {fileID: 114697472533651096}
+  - component: {fileID: 114006259990838762}
   - component: {fileID: 61463821087328002}
   - component: {fileID: 50798197228396542}
   - component: {fileID: 95177323246478046}
@@ -106,6 +107,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114006259990838762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300247353362632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfe6ff242f69cd4aa3fb7eff49fa539, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 1638221428797908, guid: 91a920c9427b90d49a3c10c1f92d44c1, type: 2}
+  fireRate: 0.3
 --- !u!114 &114697472533651096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -118,7 +132,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  bullet: {fileID: 1638221428797908, guid: 91a920c9427b90d49a3c10c1f92d44c1, type: 2}
   explosionFX: {fileID: 1717921367839052, guid: 2d5ecfdb178772045a7ee68833679901,
     type: 2}
 --- !u!212 &212839226008486812

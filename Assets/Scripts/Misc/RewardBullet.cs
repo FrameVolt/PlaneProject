@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coin : MonoBehaviour {
-
+public class RewardBullet : MonoBehaviour {
     private AudioSource coinAudio;
-    private Renderer rend;
+    private SpriteRenderer rend;
     private Collider2D coll;
 
-	private void Awake () {
+    private void Awake()
+    {
         coinAudio = GetComponent<AudioSource>();
-        rend = GetComponentInChildren<Renderer>();
+        rend = GetComponentInChildren<SpriteRenderer>();
         coll = GetComponent<Collider2D>();
     }
-	
-	
-	private void Update () {
-		
-	}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -26,7 +21,8 @@ public class Coin : MonoBehaviour {
             coll.enabled = false;
             coinAudio.Play();
             rend.enabled = false;
-            LevelDirector.Instance.Score += 10;
+            Weapon weapon = collision.gameObject.GetComponent<Weapon>();
+            weapon.ChangeWeaponType((int)weapon.CurrentWeaponType + 1);
             Destroy(this.gameObject, coinAudio.clip.length);
         }
     }

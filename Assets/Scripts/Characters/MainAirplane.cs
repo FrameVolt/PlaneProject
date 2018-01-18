@@ -8,11 +8,8 @@ public class MainAirplane : MonoBehaviour, IHealth
     [SerializeField]
     private float speed = 1f;
     [SerializeField]
-    private GameObject bullet;
-    [SerializeField]
     private GameObject explosionFX;
-    [SerializeField]
-    private float fireRate = 0.3f;
+    
 
     private Transform trans;
     private Vector3 vectorSpeed;
@@ -25,7 +22,8 @@ public class MainAirplane : MonoBehaviour, IHealth
     private float MinY;
     private int health = 100;
     private Collider2D coll;
-    private float fireTimer;
+    
+    private Weapon weapon;
 
     public delegate void OnDead();
     public event OnDead OnDeadEvent;
@@ -38,6 +36,7 @@ public class MainAirplane : MonoBehaviour, IHealth
 
     private void Awake()
     {
+        weapon = GetComponent<Weapon>();
         trans = GetComponent<Transform>();
         rig = GetComponent<Rigidbody2D>();
         rig.velocity = Vector3.up;
@@ -54,30 +53,11 @@ public class MainAirplane : MonoBehaviour, IHealth
 
     private void Update()
     {
-        
-        //if (Input.GetButtonDown("Fire1"))
-        //{
-        //    FireOnce();
-        //}
-        //if (Input.GetButton("Fire1"))
-        //{
-        //    FireStart();
-        //}
-        
+
         ClampFrame();
     }
 
-    public void FireStart()
-    {
-        if (health <= 0) return;
-
-        fireTimer += Time.deltaTime;
-        if (fireTimer > fireRate)
-        {
-            Instantiate(bullet, trans.position, Quaternion.identity);
-            fireTimer = 0; 
-        }
-    }
+    #region Move
     public virtual void SetHorizontalMove(float value)
     {
         horizontalMove = value;
@@ -113,20 +93,20 @@ public class MainAirplane : MonoBehaviour, IHealth
     {
         rig.velocity = direction * speed;
     }
+    #endregion
+
+    #region Fire
+    public void FireStart()
+    {
+        weapon.FireStart();
+    }
     public void FireOnce()
     {
-        if (health <= 0) return;
-        Instantiate(bullet, trans.position, Quaternion.identity);
-
-        fireTimer = 0;
+        weapon.FireOnce();
     }
+    #endregion
 
-   
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    print("Plane OnTriggerEnter2D");
-    //}
-
+    #region Health
     public void Damage(int val, GameObject initiator)
     {
         Health -= val;
@@ -141,4 +121,5 @@ public class MainAirplane : MonoBehaviour, IHealth
         OnDeadEvent();
         Destroy(this.gameObject);
     }
+    #endregion
 }
