@@ -79,6 +79,7 @@ public class BossEnemy : EnemyBase
     {
         Instantiate(explosionFX, transform.position, Quaternion.identity);
         LevelDirector.Instance.Score += 10;
+        LevelDirector.Instance.GameWin();
         Destroy(this.gameObject);
     }
 }

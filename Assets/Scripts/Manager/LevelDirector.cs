@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class LevelDirector : Singleton<LevelDirector>
 {
 
     #region Fields
     private MainAirplane mainAirPlane;
-    private GameObject bossPlane;
+    private TankEnemy tankPerfab;
+    private NormalEnemy normalEnemyPerfab;
+
+    private BossEnemy bossEnemyPerfab;
     private PlayerData date;
    
     private int score;
@@ -34,8 +38,8 @@ public class LevelDirector : Singleton<LevelDirector>
     #endregion
 
     public Action GameStartAction;
-    public Action GameOverAction; 
-
+    public Action GameOverAction;
+    public Action GameWinAction;
     #region Massagers
     protected override void Awake() {
         Init();
@@ -52,6 +56,9 @@ public class LevelDirector : Singleton<LevelDirector>
     #region Member Function
     private void Init() {
         mainAirPlane = Resources.Load<MainAirplane>("Prefabs/MainPlane");
+        bossEnemyPerfab = Resources.Load<BossEnemy>("Prefabs/Enemys/Boss");
+        normalEnemyPerfab = Resources.Load<NormalEnemy>("Prefabs/Enemys/NormalEnemy");
+        tankPerfab = Resources.Load<TankEnemy>("Prefabs/Enemys/Tank");
         date = Resources.Load<PlayerData>("PlayerData");
         maxScore = date.maxScore;
     }
@@ -59,16 +66,30 @@ public class LevelDirector : Singleton<LevelDirector>
     private IEnumerator Decorate()
     {
         yield return new WaitForSeconds(2);
+        Instantiate(normalEnemyPerfab, normalEnemyPerfab.transform.position, Quaternion.identity);
+        CurrentAirPlane = Instantiate(mainAirPlane, mainAirPlane.transform.position, Quaternion.identity);
+        GameManager.Instance.Player = CurrentAirPlane;
+        CurrentAirPlane.OnDeadEvent += OnMainPlaneDead;
+        yield return new WaitForSeconds(10);
+        Instantiate(tankPerfab, tankPerfab.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(10);
+        Instantiate(bossEnemyPerfab, bossEnemyPerfab.transform.position, Quaternion.identity);
+    }
+
+    private IEnumerator RebornPlayer()
+    {
+        yield return new WaitForSeconds(2);
         CurrentAirPlane = Instantiate(mainAirPlane, mainAirPlane.transform.position, Quaternion.identity);
         GameManager.Instance.Player = CurrentAirPlane;
         CurrentAirPlane.OnDeadEvent += OnMainPlaneDead;
     }
 
+
     private void OnMainPlaneDead() {
         playerLifeCount--;
         if (playerLifeCount > 0)
         {
-            StartCoroutine(Decorate());
+            StartCoroutine(RebornPlayer());
         }
         else {
             GameOver();
@@ -79,6 +100,22 @@ public class LevelDirector : Singleton<LevelDirector>
         if (GameOverAction != null)
             GameOverAction();
     }
+
+
+    public void GameWin() {
+        if (GameWinAction != null) {
+            GameWinAction();
+        }
+        StartCoroutine(BackToMenu());
+    }
+
+    public IEnumerator BackToMenu() {
+        yield return new WaitForSeconds(2);
+        UIManager.Instance.FaderOn(true, 1f);
+        yield return new WaitForSeconds(1);
+        SceneManager.LoadScene(1);
+    }
+
     #endregion
 
 }
