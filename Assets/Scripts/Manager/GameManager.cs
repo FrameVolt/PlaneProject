@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : PersistentSingleton<GameManager>
 {
-    public int GameFrameRate = 300;
+    
     public float TimeScale { get; private set; }
     private bool paused;
     public bool Paused { get { return paused; } set { paused = value; } }
@@ -14,7 +14,7 @@ public class GameManager : PersistentSingleton<GameManager>
 
     protected void Start()
     {
-        Application.targetFrameRate = GameFrameRate;
+        Application.targetFrameRate = AppConst.GameFrameRate;
     }
 
     public void Reset()

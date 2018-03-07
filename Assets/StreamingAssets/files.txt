@@ -1,0 +1,4 @@
+StreamingAssets
+StreamingAssets.manifest
+ui.unity3d
+ui.unity3d.manifest

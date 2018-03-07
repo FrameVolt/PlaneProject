@@ -1,0 +1,50 @@
+ManifestFileVersion: 0
+CRC: 2032765719
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 467614ea861489186fcbc66207d542ba
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 21f0dc8ebad690f009368069428e0a1a
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Sprites/UI/Spinner-1s-200px/frame-9.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-25.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-19.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-21.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-2.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-20.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-16.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-5.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-3.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-1.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-24.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-0.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-13.png
+- Assets/Sprites/UI/Life.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-8.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-23.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-11.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-29.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-6.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-15.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-18.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-28.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-12.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-14.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-22.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-10.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-7.png
+- Assets/Sprites/UI/PauseButton01.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-4.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-26.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-17.png
+- Assets/Sprites/UI/PausedBG.png
+- Assets/Sprites/UI/Spinner-1s-200px/frame-27.png
+Dependencies: []
