@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
-using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -91,7 +90,8 @@ public class PauseMenu : MonoBehaviour
     private IEnumerator StartLevel()
     {
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(loadSceneName);
+        LoadSceneManager.LoadScene(loadSceneName);
+
     }
     private void DisplayMenu()
     {

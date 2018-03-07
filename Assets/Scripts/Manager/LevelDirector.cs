@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.SceneManagement;
 
 public class LevelDirector : Singleton<LevelDirector>
 {
@@ -113,7 +112,7 @@ public class LevelDirector : Singleton<LevelDirector>
         yield return new WaitForSeconds(2);
         UIManager.Instance.FaderOn(true, 1f);
         yield return new WaitForSeconds(1);
-        SceneManager.LoadScene(1);
+        LoadSceneManager.LoadScene(1);
     }
 
     #endregion

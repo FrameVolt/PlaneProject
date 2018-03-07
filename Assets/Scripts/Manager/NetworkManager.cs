@@ -4,12 +4,19 @@ using UnityEngine;
 using XLua;
 using System.IO;
 using UnityEngine.Networking;
+using System;
 
-public class NetworkManager : MonoBehaviour {
+public class NetworkManager : PersistentSingleton<NetworkManager>
+{
 
     private static LuaEnv luaEnv;
 
-    private void Awake () {
+    private Action OnLuaInjectedCallback;
+    public void OnLuaInjected(Action luaInjected) {
+        OnLuaInjectedCallback += luaInjected;
+    }
+    protected override void Awake () {
+        base.Awake();
         StartCoroutine(OnUpdateResource());
     }
 	
@@ -40,12 +47,10 @@ public class NetworkManager : MonoBehaviour {
             }
 
             string webPath = AppConst.WebUrl + files[i];
-            print(localfile);
-            print(webPath);
             yield return StartCoroutine(Load(webPath, localfile));
         }
 
-        print("all done");
+        print("All assetbundle loaded");
         InitAllLuaScripts();
     }
 
@@ -60,7 +65,10 @@ public class NetworkManager : MonoBehaviour {
     private void InitAllLuaScripts()
     {
         string luaScriptsPath = Path.Combine(AppConst.DataPath, "LuaScripts");
-
+        if (!Directory.Exists(luaScriptsPath))
+        {
+            Directory.CreateDirectory(luaScriptsPath);
+        }
         string[] fileNames = Directory.GetFiles(luaScriptsPath);
 
         for (int i = 0; i < fileNames.Length; i++)
@@ -69,5 +77,9 @@ public class NetworkManager : MonoBehaviour {
             luaEnv.DoString(System.Text.Encoding.UTF8.GetString(bytes));
         }
         print("All lua injected");
+
+        if (OnLuaInjectedCallback != null) {
+            OnLuaInjectedCallback();
+        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -13,6 +12,9 @@ public class MainMenu : MonoBehaviour
     private CanvasGroup optionGroup;
     [SerializeField]
     private CanvasGroup creditGroup;
+    [SerializeField]
+    private CanvasGroup leaderboardGroup;
+
 
     private Stack<CanvasGroup> canvasGroupStack = new Stack<CanvasGroup>();
     private List<CanvasGroup> canvasGroupList = new List<CanvasGroup>();
@@ -23,7 +25,7 @@ public class MainMenu : MonoBehaviour
         canvasGroupList.Add(mainMenuGroup);
         canvasGroupList.Add(optionGroup);
         canvasGroupList.Add(creditGroup);
-
+        canvasGroupList.Add(leaderboardGroup);
         canvasGroupStack.Push(mainMenuGroup);
         DisplayMenu();
     }
@@ -58,11 +60,16 @@ public class MainMenu : MonoBehaviour
         canvasGroupStack.Push(creditGroup);
         DisplayMenu();
     }
+    public void LeaderboardButton()
+    {
+        canvasGroupStack.Push(leaderboardGroup);
+        DisplayMenu();
+    }
 
     private IEnumerator StartLevel()
     {
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(loadSceneName);
+        LoadSceneManager.LoadScene(loadSceneName);
     }
     private void DisplayMenu()
     {
