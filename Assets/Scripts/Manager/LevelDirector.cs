@@ -12,7 +12,7 @@ public class LevelDirector : Singleton<LevelDirector>
     private NormalEnemy normalEnemyPerfab;
 
     private BossEnemy bossEnemyPerfab;
-    private PlayerData date;
+    private PlayerData data;
    
     private int score;
     private int maxScore;
@@ -26,7 +26,7 @@ public class LevelDirector : Singleton<LevelDirector>
         set {
             score = value;
             if (maxScore < score) {
-                date.maxScore = value;
+                data.maxScore = value;
                 maxScore = value;
             }
         }
@@ -58,8 +58,8 @@ public class LevelDirector : Singleton<LevelDirector>
         bossEnemyPerfab = Resources.Load<BossEnemy>("Prefabs/Enemys/Boss");
         normalEnemyPerfab = Resources.Load<NormalEnemy>("Prefabs/Enemys/NormalEnemy");
         tankPerfab = Resources.Load<TankEnemy>("Prefabs/Enemys/Tank");
-        date = Resources.Load<PlayerData>("PlayerData");
-        maxScore = date.maxScore;
+        data = Resources.Load<PlayerData>("PlayerData");
+        maxScore = data.maxScore;
     }
 
     private IEnumerator Decorate()
@@ -98,6 +98,8 @@ public class LevelDirector : Singleton<LevelDirector>
     public void GameOver() {
         if (GameOverAction != null)
             GameOverAction();
+
+        AddHistoryScore();
     }
 
 
@@ -108,7 +110,34 @@ public class LevelDirector : Singleton<LevelDirector>
         StartCoroutine(BackToMenu());
     }
 
+    private void AddHistoryScore() {
+        if (Score <= 0) return;
+
+        if (data.LeaderboardDatas.Count > 10)
+        {
+            for (int i = 0; i < data.LeaderboardDatas.Count; i++)
+            {
+                if (Score > data.LeaderboardDatas[i].score)
+                {
+                    data.LeaderboardDatas.RemoveAt(i);
+                    LeaderboardData leaderboardData = new LeaderboardData();
+                    leaderboardData.score = score;
+                    leaderboardData.date = "11";
+                    data.LeaderboardDatas.Add(leaderboardData);
+                }
+            }
+        }
+        else {
+            LeaderboardData leaderboardData = new LeaderboardData();
+            leaderboardData.score = score;
+            leaderboardData.date = "11";
+            data.LeaderboardDatas.Add(leaderboardData);
+        }
+    }
+
+
     public IEnumerator BackToMenu() {
+        AddHistoryScore();
         yield return new WaitForSeconds(2);
         UIManager.Instance.FaderOn(true, 1f);
         yield return new WaitForSeconds(1);

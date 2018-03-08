@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadSceneManager : MonoBehaviour {
+public class LoadSceneManager {
 
     //public const string LoadingScreenSceneName = "LoadingScreen";
     
