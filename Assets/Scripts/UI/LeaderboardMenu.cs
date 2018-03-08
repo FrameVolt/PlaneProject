@@ -9,20 +9,28 @@ public class LeaderboardMenu : MonoBehaviour {
     private GameObject content;
 
     private PlayerData data;
-    private Text[] texts;
-     
+    private List<Text> scoreTexts = new List<Text>();
+    private List<Text> dataTexts = new List<Text>();
+
+
     private void Awake () {
         data = Resources.Load<PlayerData>("PlayerData");
-        texts = content.GetComponentsInChildren<Text>();
+        foreach (Transform item in content.transform)
+        {
+            scoreTexts.Add(item.GetComponent<Text>());
+            dataTexts.Add(item.GetChild(0).GetComponent<Text>());
+        }
+        
     }
 
     private void Start()
     {
-        //data.LeaderboardDatas.Sort();
-        //data.LeaderboardDatas.Reverse();
-        for (int i = 0; (i < texts.Length) || (i < data.LeaderboardDatas.Count); i++)
+        data.LeaderboardDatas.Sort();
+        data.LeaderboardDatas.Reverse();
+        for (int i = 0; (i < scoreTexts.Count) && (i < data.LeaderboardDatas.Count); i++)
         {
-            texts[i].text = data.LeaderboardDatas[i].score.ToString() + data.LeaderboardDatas[i].date;
+            scoreTexts[i].text = data.LeaderboardDatas[i].score.ToString();
+            dataTexts[i].text = data.LeaderboardDatas[i].date;
         }
     }
 }

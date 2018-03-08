@@ -1,0 +1,26 @@
+ManifestFileVersion: 0
+CRC: 2909722252
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6132c0147cae75345218e5fa38d19b18
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 460b4f5d62b6facbccf7c01637df8f00
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Sprites/Enemys/Boss.png
+- Assets/Sprites/Enemys/NormalEnemy.png
+- Assets/Sprites/Enemys/Tank.png
+- Assets/Sprites/BackGround/SciFiBackgroundBack.png
+- Assets/Sprites/BackGround/SciFiBackgroundMiddleSprite.png
+- Assets/Sprites/MainPlane.png
+- Assets/Sprites/BackGround/SciFiBackgroundFrontSprite.png
+- Assets/Sprites/Crafts.png
+- Assets/Sprites/FX/RetroExplosion.png
+Dependencies: []

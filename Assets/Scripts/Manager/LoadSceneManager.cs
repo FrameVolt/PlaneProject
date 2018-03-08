@@ -21,6 +21,7 @@ public class LoadSceneManager {
         //    SceneManager.LoadScene(LoadingScreenSceneName);
         //}
         SceneManager.LoadScene(index);
+        GameManager.Instance.UnPause();
     }
 
     //private IEnumerator OnLoadingScene(AsyncOperation asyncOperation) {

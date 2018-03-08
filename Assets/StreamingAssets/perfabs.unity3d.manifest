@@ -1,0 +1,82 @@
+ManifestFileVersion: 0
+CRC: 2125110927
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5131470442b36529fc90641a7fdfa902
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: cf82f84655380a68359248eae78048dc
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 50
+  Script: {instanceID: 0}
+- Class: 58
+  Script: {instanceID: 0}
+- Class: 61
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 82
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5bfe6ff242f69cd4aa3fb7eff49fa539, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9fbb6a24a1beb41438ea53b83b0d876a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 846e57c4d3eff0c4da7c67902f67d8c2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe7b1d25312b4c84d9ccae805dbdfe2f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1e409cd5e6724b547b547b7afae9769c, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8c3ed5f6c5f684547b2ed5a1828f5c9a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: cefd100b362602344af3adac3fcf7b80, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 635a4e5d4c3f4474ba93f1b331889b53, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 7d68f9afccfe02f478237b69ce24c60f, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0f0cacff87286c14485ff2187d24f47c, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 212
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 241
+  Script: {instanceID: 0}
+- Class: 243
+  Script: {instanceID: 0}
+- Class: 245
+  Script: {instanceID: 0}
+Assets:
+- Assets/Resources/Prefabs/Enemys/Tank.prefab
+- Assets/Resources/Prefabs/Crafts/Coin.prefab
+- Assets/Resources/Prefabs/Crafts/Block.prefab
+- Assets/Resources/Prefabs/Enemys/NormalEnemy.prefab
+- Assets/Resources/Prefabs/MainPlane.prefab
+- Assets/Resources/Prefabs/Crafts/RewardBullet.prefab
+- Assets/Resources/Prefabs/Enemys/Boss.prefab
+- Assets/Resources/Prefabs/Crafts/MyBullet.prefab
+- Assets/Resources/Prefabs/Crafts/BossBullet.prefab
+- Assets/Resources/Prefabs/Explosions/RetroExplosion.prefab
+Dependencies:
+- E:/UnityWorks/PlaneProject/Assets/StreamingAssets/sprites.unity3d

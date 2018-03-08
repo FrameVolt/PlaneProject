@@ -13,8 +13,13 @@ public class PlayerData : ScriptableObject
 }
 
 [Serializable]
-public struct LeaderboardData
+public struct LeaderboardData : IComparable<LeaderboardData>
 {
     public int score;
     public string date;
+
+    public int CompareTo(LeaderboardData x)
+    {
+        return score.CompareTo(x.score);
+    }
 }

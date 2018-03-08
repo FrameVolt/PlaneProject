@@ -83,16 +83,17 @@ public class PauseMenu : MonoBehaviour
         //#else
         //		Application.Quit();
         //#endif
-        Pause();
-        UIManager.Instance.FaderOn(true, 1f);
-        StartCoroutine(StartLevel());
+        //Pause();
+        //UIManager.Instance.FaderOn(true, 1f);
+        //StartCoroutine(StartLevel());
+        LevelDirector.Instance.StartCoroutine(LevelDirector.Instance.BackToMenu(0));
     }
-    private IEnumerator StartLevel()
-    {
-        yield return new WaitForSeconds(1f);
-        LoadSceneManager.LoadScene(loadSceneName);
+    //private IEnumerator StartLevel()
+    //{
+    //    yield return new WaitForSeconds(1f);
+    //    LoadSceneManager.LoadScene(loadSceneName);
 
-    }
+    //}
     private void DisplayMenu()
     {
         foreach (var item in canvasGroupList)

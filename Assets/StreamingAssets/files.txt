@@ -1,3 +1,7 @@
+perfabs.unity3d
+perfabs.unity3d.manifest
+sprites.unity3d
+sprites.unity3d.manifest
 StreamingAssets
 StreamingAssets.manifest
 ui.unity3d

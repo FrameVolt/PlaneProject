@@ -13,26 +13,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Lucy
   maxScore: 30
-  LeaderboardDatas:
-  - score: 0
-    date: 
-  - score: 0
-    date: 
-  - score: 0
-    date: 
-  - score: 0
-    date: 
-  - score: 0
-    date: 
-  - score: 0
-    date: 
-  - score: 0
-    date: 
-  - score: 0
-    date: 
-  - score: 0
-    date: 
-  - score: 0
-    date: 
-  - score: 30
-    date: 11
+  LeaderboardDatas: []

@@ -7,11 +7,17 @@ public class LevelDirector : Singleton<LevelDirector>
 {
 
     #region Fields
-    private MainAirplane mainAirPlane;
-    private TankEnemy tankPerfab;
-    private NormalEnemy normalEnemyPerfab;
+    //private MainAirplane mainAirPlane;
+    //private TankEnemy tankPerfab;
+    //private NormalEnemy normalEnemyPerfab;
 
-    private BossEnemy bossEnemyPerfab;
+    //private BossEnemy bossEnemyPerfab;
+
+    private GameObject mainAirPlane;
+    private GameObject tankPerfab;
+    private GameObject normalEnemyPerfab;
+    private GameObject bossEnemyPerfab;
+
     private PlayerData data;
    
     private int score;
@@ -54,10 +60,16 @@ public class LevelDirector : Singleton<LevelDirector>
 
     #region Member Function
     private void Init() {
-        mainAirPlane = Resources.Load<MainAirplane>("Prefabs/MainPlane");
-        bossEnemyPerfab = Resources.Load<BossEnemy>("Prefabs/Enemys/Boss");
-        normalEnemyPerfab = Resources.Load<NormalEnemy>("Prefabs/Enemys/NormalEnemy");
-        tankPerfab = Resources.Load<TankEnemy>("Prefabs/Enemys/Tank");
+        //mainAirPlane = Resources.Load<MainAirplane>("Prefabs/MainPlane");
+        //bossEnemyPerfab = Resources.Load<BossEnemy>("Prefabs/Enemys/Boss");
+        //normalEnemyPerfab = Resources.Load<NormalEnemy>("Prefabs/Enemys/NormalEnemy");
+        //tankPerfab = Resources.Load<TankEnemy>("Prefabs/Enemys/Tank");
+
+        PoolManager.Instance.CreateByBundle("MainPlane", "perfabs.unity3d", delegate(UnityEngine.Object go) { mainAirPlane = (GameObject)go; });
+        PoolManager.Instance.CreateByBundle("MainPlane", "perfabs.unity3d", go => { mainAirPlane = (GameObject)go; });
+        PoolManager.Instance.CreateByBundle("Boss", "perfabs.unity3d", delegate (UnityEngine.Object go) { bossEnemyPerfab = (GameObject)go; });
+        PoolManager.Instance.CreateByBundle("NormalEnemy", "perfabs.unity3d", delegate (UnityEngine.Object go) { normalEnemyPerfab = (GameObject)go; });
+        PoolManager.Instance.CreateByBundle("Tank", "perfabs.unity3d", delegate (UnityEngine.Object go) { tankPerfab = (GameObject)go; });
         data = Resources.Load<PlayerData>("PlayerData");
         maxScore = data.maxScore;
     }
@@ -66,7 +78,7 @@ public class LevelDirector : Singleton<LevelDirector>
     {
         yield return new WaitForSeconds(2);
         Instantiate(normalEnemyPerfab, normalEnemyPerfab.transform.position, Quaternion.identity);
-        CurrentAirPlane = Instantiate(mainAirPlane, mainAirPlane.transform.position, Quaternion.identity);
+        CurrentAirPlane = Instantiate(mainAirPlane, mainAirPlane.transform.position, Quaternion.identity).GetComponent<MainAirplane>();
         GameManager.Instance.Player = CurrentAirPlane;
         CurrentAirPlane.OnDeadEvent += OnMainPlaneDead;
         yield return new WaitForSeconds(10);
@@ -78,7 +90,7 @@ public class LevelDirector : Singleton<LevelDirector>
     private IEnumerator RebornPlayer()
     {
         yield return new WaitForSeconds(2);
-        CurrentAirPlane = Instantiate(mainAirPlane, mainAirPlane.transform.position, Quaternion.identity);
+        CurrentAirPlane = Instantiate(mainAirPlane, mainAirPlane.transform.position, Quaternion.identity).GetComponent<MainAirplane>();
         GameManager.Instance.Player = CurrentAirPlane;
         CurrentAirPlane.OnDeadEvent += OnMainPlaneDead;
     }
@@ -113,7 +125,7 @@ public class LevelDirector : Singleton<LevelDirector>
     private void AddHistoryScore() {
         if (Score <= 0) return;
 
-        if (data.LeaderboardDatas.Count > 10)
+        if (data.LeaderboardDatas.Count >= 10)
         {
             for (int i = 0; i < data.LeaderboardDatas.Count; i++)
             {
@@ -122,25 +134,26 @@ public class LevelDirector : Singleton<LevelDirector>
                     data.LeaderboardDatas.RemoveAt(i);
                     LeaderboardData leaderboardData = new LeaderboardData();
                     leaderboardData.score = score;
-                    leaderboardData.date = "11";
+                    leaderboardData.date = System.DateTime.Now.ToString("yy-MM-dd,h:mm:ss tt");
                     data.LeaderboardDatas.Add(leaderboardData);
+                    break;
                 }
             }
         }
         else {
             LeaderboardData leaderboardData = new LeaderboardData();
             leaderboardData.score = score;
-            leaderboardData.date = "11";
+            leaderboardData.date = System.DateTime.Now.ToString("yy-MM-dd,h:mm:ss tt");
             data.LeaderboardDatas.Add(leaderboardData);
         }
     }
 
 
-    public IEnumerator BackToMenu() {
+    public IEnumerator BackToMenu(float delayTime = 2.0f) {
         AddHistoryScore();
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSecondsRealtime(delayTime);
         UIManager.Instance.FaderOn(true, 1f);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSecondsRealtime(1);
         LoadSceneManager.LoadScene(1);
     }
 

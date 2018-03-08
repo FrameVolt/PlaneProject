@@ -1,7 +1,14 @@
 ManifestFileVersion: 0
-CRC: 172537168
+CRC: 3361228087
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
       Name: ui.unity3d
+      Dependencies: {}
+    Info_1:
+      Name: perfabs.unity3d
+      Dependencies:
+        Dependency_0: sprites.unity3d
+    Info_2:
+      Name: sprites.unity3d
       Dependencies: {}

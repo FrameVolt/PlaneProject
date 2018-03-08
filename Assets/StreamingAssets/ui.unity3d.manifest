@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2032765719
+CRC: 1790916299
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 467614ea861489186fcbc66207d542ba
+    Hash: de802441b2983d6d04b3708254e842db
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 21f0dc8ebad690f009368069428e0a1a
+    Hash: 460b4f5d62b6facbccf7c01637df8f00
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -43,6 +43,7 @@ Assets:
 - Assets/Sprites/UI/Spinner-1s-200px/frame-7.png
 - Assets/Sprites/UI/PauseButton01.png
 - Assets/Sprites/UI/Spinner-1s-200px/frame-4.png
+- Assets/Sprites/UI/DotLine.png
 - Assets/Sprites/UI/Spinner-1s-200px/frame-26.png
 - Assets/Sprites/UI/Spinner-1s-200px/frame-17.png
 - Assets/Sprites/UI/PausedBG.png
