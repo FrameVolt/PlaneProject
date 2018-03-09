@@ -5,13 +5,13 @@ using UnityEngine;
 public class BossEnemy : EnemyBase
 {
     [SerializeField]
-    private GameObject bulletPrefab;
+    private GameObject bulletPrefab = null;
     [SerializeField]
-    private float repeatRate;
+    private float repeatRate = 0f;
     [SerializeField]
     private float speed = 1;
     [SerializeField]
-    private GameObject explosionFX;
+    private GameObject explosionFX = null;
 
     private float maxX;
     private float minX;
@@ -20,7 +20,7 @@ public class BossEnemy : EnemyBase
     private Vector3 direction;
     private Vector3 rightDirection;
     private Vector3 leftDirection;
-    private MainAirplane mainPlane;
+    private MainAirplane mainPlane = null;
 
     private void Start()
     {

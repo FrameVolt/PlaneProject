@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameOverMenu : MonoBehaviour {
     [SerializeField]
-    private CanvasGroup gameOverGroup;
+    private CanvasGroup gameOverGroup = null;
     private LevelDirector director;
 
     private void Start () {

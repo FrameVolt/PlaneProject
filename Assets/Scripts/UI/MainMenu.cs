@@ -5,7 +5,7 @@ using UnityEngine;
 public class MainMenu : MonoBehaviour
 {
     [SerializeField]
-    private string loadSceneName;
+    private string loadSceneName = "";
     [SerializeField]
     private CanvasGroup mainMenuGroup;
     [SerializeField]

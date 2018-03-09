@@ -11,36 +11,40 @@ public class PoolManager : PersistentSingleton<PoolManager>
     private AssetBundleManifest manifest;
 
 
-    public void CreateByBundle(string objName, string bundleName, Action<UObject> func) {
-        StartCoroutine(CreateByBundleName(objName, bundleName, func));
+    protected override void Awake()
+    {
+        base.Awake();
     }
 
-    private IEnumerator CreateByBundleName(string objName, string bundleName, Action<UObject> func)
-    {
-        yield return StartCoroutine(AssetBundleManager.DownloadAssetBundle(Path.Combine(AppConst.DataPath, "StreamingAssets"), 0));
-        manifestBundle = AssetBundleManager.GetAssetBundle(Path.Combine(AppConst.DataPath, "StreamingAssets"), 0);
-        manifest = (AssetBundleManifest)manifestBundle.LoadAsset("AssetBundleManifest");
+    public void CreateByBundle(string objName, string bundleName, Action<UObject> func) {
+        CreateByBundleName(objName, bundleName, func);
+    }
 
+    private void CreateByBundleName(string objName, string bundleName, Action<UObject> func)
+    {
+        if (manifest == null) {
+            manifestBundle = AssetBundle.LoadFromFile(Path.Combine(AppConst.DataPath, "StreamingAssets"));
+            manifest = (AssetBundleManifest)manifestBundle.LoadAsset("AssetBundleManifest");
+        }
 
         string[] depends = manifest.GetAllDependencies(bundleName);
-
-        AssetBundle[] dependsAssetbundle = new AssetBundle[depends.Length];
+        
         for (int index = 0; index < depends.Length; index++)
         {
-            //加载所有的依赖文件; 
-            yield return StartCoroutine(AssetBundleManager.DownloadAssetBundle(AppConst.DataPath + depends[index], 0));
-            dependsAssetbundle[index] = AssetBundleManager.GetAssetBundle(AppConst.DataPath + depends[index], 0);
+            //加载所有的依赖文件;
+            StartCoroutine(AssetBundleManager.DownloadAssetBundle(AppConst.DataPath + depends[index], 0, null));
         }
         
-        yield return StartCoroutine(AssetBundleManager.DownloadAssetBundle(AppConst.DataPath + bundleName, 0));
-        AssetBundle bundle = AssetBundleManager.GetAssetBundle(AppConst.DataPath + bundleName, 0);
-        if (bundle != null)
-        {
-            GameObject go = bundle.LoadAsset<GameObject>(objName);
-            if (func != null) {
+        StartCoroutine(AssetBundleManager.DownloadAssetBundle(AppConst.DataPath + bundleName, 0,
+            x => {
+            GameObject go = ((AssetBundle)x).LoadAsset<GameObject>(objName);
+            if (func != null)
+            {
                 func(go);
             }
-        }
+        }));
     }
+
+
 
 }

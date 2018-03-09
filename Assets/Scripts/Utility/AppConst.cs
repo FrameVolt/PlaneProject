@@ -24,4 +24,7 @@ public class AppConst{
             }
         }
     }
+
+    public static bool isDebugMode = true;
+
 }

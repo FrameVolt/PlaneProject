@@ -7,18 +7,18 @@ public class NormalEnemy : EnemyBase
 {
 
     [SerializeField]
-    private GameObject bulletPrefab;
+    private GameObject bulletPrefab = null;
     [SerializeField]
-    private float repeatRate;
+    private float repeatRate = 0f;
     [SerializeField]
     private float speed = 1;
     [SerializeField]
-    private GameObject explosionFX;
+    private GameObject explosionFX = null;
 
     private float MinY;
     private Vector3 direction;
     
-    private MainAirplane mainPlane;
+    //private MainAirplane mainPlane = null;
 
     private void Start () {
         InvokeRepeating("Fire", 0f, repeatRate);

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UObject = UnityEngine.Object;
 
 static public class AssetBundleManager
 {
@@ -31,7 +32,7 @@ static public class AssetBundleManager
     };
 
     // Get an AssetBundle
-    public static AssetBundle GetAssetBundle(string url, int version)
+    private static AssetBundle GetAssetBundle(string url, int version)
     {
         string keyName = url + version.ToString();
         AssetBundleRef abRef;
@@ -41,25 +42,58 @@ static public class AssetBundleManager
         else
             return null;
     }
-   
-    // Download an AssetBundle
-    public static IEnumerator DownloadAssetBundle(string url, int version)
-    {
-        if (isLoading) yield return null;
 
+    // Download an AssetBundle
+    //public static IEnumerator DownloadAssetBundle(string url, int version)
+    //{
+
+
+    //    string keyName = url + version.ToString();
+    //    if (dictAssetBundleRefs.ContainsKey(keyName))
+    //        yield return null;
+    //    else
+    //    {
+
+    //        isLoading = true;
+    //        AssetBundleRef abRef = new AssetBundleRef(url, version);
+
+    //        AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(url);
+    //        while (!request.isDone)
+    //        {
+    //            yield return null;
+    //        }
+    //        abRef.assetBundle = request.assetBundle;
+    //        dictAssetBundleRefs.Add(keyName, abRef);
+    //        isLoading = false;
+    //    }
+    //}
+
+    public static IEnumerator DownloadAssetBundle(string url, int version, Action<UObject> func)
+    {
+        while (isLoading)
+        {
+            yield return null;
+        }
         string keyName = url + version.ToString();
         if (dictAssetBundleRefs.ContainsKey(keyName))
-            yield return null;
+        {
+            if (func != null)
+                func(GetAssetBundle(url, version));
+        }
         else
         {
+
             isLoading = true;
             AssetBundleRef abRef = new AssetBundleRef(url, version);
-            
+
             AssetBundleCreateRequest request = AssetBundle.LoadFromFileAsync(url);
-            while (!request.isDone) {
+            while (!request.isDone)
+            {
                 yield return null;
             }
             abRef.assetBundle = request.assetBundle;
+            if (func != null)
+                func(request.assetBundle);
             dictAssetBundleRefs.Add(keyName, abRef);
             isLoading = false;
         }

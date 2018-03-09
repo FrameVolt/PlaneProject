@@ -5,7 +5,7 @@ using UnityEngine;
 public class BGRoll : MonoBehaviour {
 
     [SerializeField]
-    private float speed;
+    private float speed = 0f;
 
     private Renderer rend;
     private Material mat;

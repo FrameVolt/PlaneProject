@@ -19,7 +19,7 @@ public class LevelDirector : Singleton<LevelDirector>
     private GameObject bossEnemyPerfab;
 
     private PlayerData data;
-   
+
     private int score;
     private int maxScore;
     private int playerLifeCount = 3;
@@ -27,18 +27,21 @@ public class LevelDirector : Singleton<LevelDirector>
     #endregion
 
     #region Properties
-    public int Score {
+    public int Score
+    {
         get { return score; }
-        set {
+        set
+        {
             score = value;
-            if (maxScore < score) {
+            if (maxScore < score)
+            {
                 data.maxScore = value;
                 maxScore = value;
             }
         }
     }
-    public int MaxScore{get { return maxScore; } }
-    public int PlayerLifeCount { get { return playerLifeCount;} }
+    public int MaxScore { get { return maxScore; } }
+    public int PlayerLifeCount { get { return playerLifeCount; } }
     public MainAirplane CurrentAirPlane { get; private set; }
     #endregion
 
@@ -46,10 +49,13 @@ public class LevelDirector : Singleton<LevelDirector>
     public Action GameOverAction;
     public Action GameWinAction;
     #region Massagers
-    protected override void Awake() {
-        Init();
+    protected override void Awake()
+    {
+
     }
-    private void Start () {
+    private void Start()
+    {
+        Init();
         if (GameStartAction != null)
             GameStartAction();
         if (UIManager.Instance != null)
@@ -59,13 +65,14 @@ public class LevelDirector : Singleton<LevelDirector>
     #endregion
 
     #region Member Function
-    private void Init() {
-        //mainAirPlane = Resources.Load<MainAirplane>("Prefabs/MainPlane");
-        //bossEnemyPerfab = Resources.Load<BossEnemy>("Prefabs/Enemys/Boss");
-        //normalEnemyPerfab = Resources.Load<NormalEnemy>("Prefabs/Enemys/NormalEnemy");
-        //tankPerfab = Resources.Load<TankEnemy>("Prefabs/Enemys/Tank");
+    private void Init()
+    {
+        //mainAirPlane = Resources.Load<GameObject>("Prefabs/MainPlane");
+        //bossEnemyPerfab = Resources.Load<GameObject>("Prefabs/Enemys/Boss");
+        //normalEnemyPerfab = Resources.Load<GameObject>("Prefabs/Enemys/NormalEnemy");
+        //tankPerfab = Resources.Load<GameObject>("Prefabs/Enemys/Tank");
 
-        PoolManager.Instance.CreateByBundle("MainPlane", "perfabs.unity3d", delegate(UnityEngine.Object go) { mainAirPlane = (GameObject)go; });
+        // PoolManager.Instance.CreateByBundle("MainPlane", "perfabs.unity3d", delegate (UnityEngine.Object go) { mainAirPlane = (GameObject)go; });
         PoolManager.Instance.CreateByBundle("MainPlane", "perfabs.unity3d", go => { mainAirPlane = (GameObject)go; });
         PoolManager.Instance.CreateByBundle("Boss", "perfabs.unity3d", delegate (UnityEngine.Object go) { bossEnemyPerfab = (GameObject)go; });
         PoolManager.Instance.CreateByBundle("NormalEnemy", "perfabs.unity3d", delegate (UnityEngine.Object go) { normalEnemyPerfab = (GameObject)go; });
@@ -96,18 +103,21 @@ public class LevelDirector : Singleton<LevelDirector>
     }
 
 
-    private void OnMainPlaneDead() {
+    private void OnMainPlaneDead()
+    {
         playerLifeCount--;
         if (playerLifeCount > 0)
         {
             StartCoroutine(RebornPlayer());
         }
-        else {
+        else
+        {
             GameOver();
         }
     }
 
-    public void GameOver() {
+    public void GameOver()
+    {
         if (GameOverAction != null)
             GameOverAction();
 
@@ -115,14 +125,17 @@ public class LevelDirector : Singleton<LevelDirector>
     }
 
 
-    public void GameWin() {
-        if (GameWinAction != null) {
+    public void GameWin()
+    {
+        if (GameWinAction != null)
+        {
             GameWinAction();
         }
         StartCoroutine(BackToMenu());
     }
 
-    private void AddHistoryScore() {
+    private void AddHistoryScore()
+    {
         if (Score <= 0) return;
 
         if (data.LeaderboardDatas.Count >= 10)
@@ -131,7 +144,6 @@ public class LevelDirector : Singleton<LevelDirector>
             {
                 if (Score > data.LeaderboardDatas[i].score)
                 {
-                    data.LeaderboardDatas.RemoveAt(i);
                     LeaderboardData leaderboardData = new LeaderboardData();
                     leaderboardData.score = score;
                     leaderboardData.date = System.DateTime.Now.ToString("yy-MM-dd,h:mm:ss tt");
@@ -139,8 +151,11 @@ public class LevelDirector : Singleton<LevelDirector>
                     break;
                 }
             }
+            if (data.LeaderboardDatas.Count > 10)
+                data.LeaderboardDatas.RemoveAt(data.LeaderboardDatas.Count - 2);
         }
-        else {
+        else
+        {
             LeaderboardData leaderboardData = new LeaderboardData();
             leaderboardData.score = score;
             leaderboardData.date = System.DateTime.Now.ToString("yy-MM-dd,h:mm:ss tt");
@@ -149,7 +164,8 @@ public class LevelDirector : Singleton<LevelDirector>
     }
 
 
-    public IEnumerator BackToMenu(float delayTime = 2.0f) {
+    public IEnumerator BackToMenu(float delayTime = 2.0f)
+    {
         AddHistoryScore();
         yield return new WaitForSecondsRealtime(delayTime);
         UIManager.Instance.FaderOn(true, 1f);

@@ -6,9 +6,9 @@ using UnityEngine.Audio;
 public class AudioManager : PersistentSingleton<AudioManager>
 {
     [SerializeField]
-    private GameSetting gameSetting;
+    private GameSetting gameSetting = null;
     [SerializeField]
-    private AudioMixer mixer;
+    private AudioMixer mixer = null;
 
     private float musicValume;
     private float effectValume;

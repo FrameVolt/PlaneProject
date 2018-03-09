@@ -9,7 +9,7 @@ using System;
 public class NetworkManager : PersistentSingleton<NetworkManager>
 {
 
-    private static LuaEnv luaEnv;
+    private static LuaEnv luaEnv = null;
 
     private Action OnLuaInjectedCallback;
     public void OnLuaInjected(Action luaInjected) {
@@ -18,6 +18,7 @@ public class NetworkManager : PersistentSingleton<NetworkManager>
     protected override void Awake () {
         base.Awake();
         StartCoroutine(OnUpdateResource());
+        luaEnv = new LuaEnv();
     }
 	
     IEnumerator OnUpdateResource()
