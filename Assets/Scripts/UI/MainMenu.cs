@@ -14,7 +14,8 @@ public class MainMenu : MonoBehaviour
     private CanvasGroup creditGroup;
     [SerializeField]
     private CanvasGroup leaderboardGroup;
-
+    [SerializeField]
+    private CanvasGroup matchGroup;
 
     private Stack<CanvasGroup> canvasGroupStack = new Stack<CanvasGroup>();
     private List<CanvasGroup> canvasGroupList = new List<CanvasGroup>();
@@ -26,6 +27,7 @@ public class MainMenu : MonoBehaviour
         canvasGroupList.Add(optionGroup);
         canvasGroupList.Add(creditGroup);
         canvasGroupList.Add(leaderboardGroup);
+        canvasGroupList.Add(matchGroup);
         canvasGroupStack.Push(mainMenuGroup);
         DisplayMenu();
     }
@@ -45,11 +47,16 @@ public class MainMenu : MonoBehaviour
         canvasGroupStack.Pop();
         DisplayMenu();
     }
-    public void StartButton()
+    public void MatchButton()
     {
-        UIManager.Instance.FaderOn(true, 1f);
-        StartCoroutine(StartLevel());
+        canvasGroupStack.Push(matchGroup);
+        DisplayMenu();
     }
+    //public void StartButton()
+    //{
+    //    UIManager.Instance.FaderOn(true, 1f);
+    //    StartCoroutine(StartLevel());
+    //}
     public void OptionButton()
     {
         canvasGroupStack.Push(optionGroup);

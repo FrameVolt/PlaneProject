@@ -20,7 +20,7 @@ public class BossEnemy : EnemyBase
     private Vector3 direction;
     private Vector3 rightDirection;
     private Vector3 leftDirection;
-    private MainAirplane mainPlane = null;
+   // private MainAirplane mainPlane = null;
 
     private void Start()
     {
@@ -62,7 +62,7 @@ public class BossEnemy : EnemyBase
     {
         for (int i = 0; i < 8; i++)
         {
-            GameObject bulletOBJ = Instantiate(bulletPrefab, this.transform.position, Quaternion.Euler(0, 0, 45 * i));
+            Instantiate(bulletPrefab, this.transform.position, Quaternion.Euler(0, 0, 45 * i));
         }
     }
 

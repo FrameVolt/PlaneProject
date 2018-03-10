@@ -8,7 +8,7 @@ public class ScoreDisplay : MonoBehaviour {
     
     private LevelDirector director;
     
-    [SerializeField]private Text scoreText, maxScoreText;
+    [SerializeField]private Text scoreText, maxScoreText = null;
     [SerializeField]
     private GameObject[] lifeIcons;
 

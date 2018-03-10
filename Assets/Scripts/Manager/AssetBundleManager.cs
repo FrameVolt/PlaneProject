@@ -7,7 +7,6 @@ using UObject = UnityEngine.Object;
 
 static public class AssetBundleManager
 {
-
     // A dictionary to hold the AssetBundle references
     static private Dictionary<string, AssetBundleRef> dictAssetBundleRefs;
 

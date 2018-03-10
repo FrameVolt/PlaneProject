@@ -5,11 +5,10 @@ using UnityEngine;
 public class AppConst{
 
 
-    public const string AppName = "PlaneProject";
+    public const string AppName = "YaoPlane";
     public const string WebUrl = @"http://127.0.0.1:8080/";
     public const int GameFrameRate = 300;
-
-
+   
     public static string DataPath
     {
         get
