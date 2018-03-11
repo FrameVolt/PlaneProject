@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LobbyNetwork : MonoBehaviour {
+public class LobbyNetwork : Photon.PunBehaviour
+{
 
     private PlayerData playerdata;
-
-    private void Awkake()
+    private void Awake()
     {
         playerdata = Resources.Load<PlayerData>("PlayerData");
     }
@@ -17,14 +17,14 @@ public class LobbyNetwork : MonoBehaviour {
 	}
 	
 	
-	void OnConnectedToMaster () {
+	public override void OnConnectedToMaster () {
         print("connected to Master.");
-        PhotonNetwork.automaticallySyncScene = false;
-        PhotonNetwork.playerName = playerdata.playerName;
+        PhotonNetwork.automaticallySyncScene = true;
+        //PhotonNetwork.playerName = playerdata.playerName;
         PhotonNetwork.JoinLobby(TypedLobby.Default);
 	}
 
-    void OnJoinedLobby() {
+    public override void OnJoinedLobby() {
         print("On joined lobby");
         //if(!PhotonNetwork.inRoom)
         //MainCanvasManager.Instance.LobbyCanvas.transform.SetAsLastSibling();

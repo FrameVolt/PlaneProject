@@ -1,36 +1,60 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SplashScreen : MonoBehaviour {
-    [SerializeField]
-    private string loadSceneName;
-
+public class SplashScreen : MonoBehaviour
+{
     [SerializeField]
     private GameObject Spinner;
 
-    private bool canLoad;
+    [SerializeField]
+    private CanvasGroup loginPannelGroup;
+    [SerializeField]
+    private CanvasGroup logoPannelGroup;
 
-    private void Start () {
+    private bool luaInjected;
+    private bool joinedLobby;
+
+    private void Start()
+    {
         UIManager.Instance.FaderOn(false, 1f);
+
         NetworkManager.Instance.OnLuaInjected(OnLuaInjected);
-
-        StartCoroutine(LoadFirstLevel());
-    }
-    
-    private void OnLuaInjected() {
-        canLoad = true;
-        Spinner.SetActive(false);
+        StartCoroutine(ShowLoginPannel());
     }
 
-    private IEnumerator LoadFirstLevel()
+    private void OnLuaInjected()
+    {
+        luaInjected = true;
+    }
+    void OnJoinedLobby()
+    {
+        joinedLobby = true;
+    }
+    private IEnumerator ShowLoginPannel()
     {
         yield return new WaitForSeconds(2f);
-        while (!canLoad) {
+        while (!luaInjected || !joinedLobby)
+        {
             yield return null;
         }
-        UIManager.Instance.FaderOn(true, 1f);
-        yield return new WaitForSeconds(1f);
-        LoadSceneManager.LoadScene(loadSceneName);
+        Spinner.SetActive(false);
+        DisplayMenu();
+    }
+
+    private void DisplayMenu()
+    {
+        Sequence mySequence = DOTween.Sequence();
+        mySequence.Append(DOTween.To(() => logoPannelGroup.alpha, x => logoPannelGroup.alpha = x, 0, 1).OnComplete(() =>
+        {
+            logoPannelGroup.interactable = false;
+            logoPannelGroup.blocksRaycasts = false;
+        }));
+        mySequence.Append(DOTween.To(() => loginPannelGroup.alpha, x => loginPannelGroup.alpha = x, 1, 1).OnComplete(() =>
+        {
+            loginPannelGroup.interactable = true;
+            loginPannelGroup.blocksRaycasts = true;
+        }));
     }
 }

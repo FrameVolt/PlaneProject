@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : Photon.PunBehaviour
 {
     [SerializeField]
     private string loadSceneName = "";
@@ -19,6 +19,8 @@ public class MainMenu : MonoBehaviour
 
     private Stack<CanvasGroup> canvasGroupStack = new Stack<CanvasGroup>();
     private List<CanvasGroup> canvasGroupList = new List<CanvasGroup>();
+
+    private bool sendedJoinRandomRoom;
 
     private void Start()
     {
@@ -42,15 +44,23 @@ public class MainMenu : MonoBehaviour
 
     public void Esc()
     {
-        if (canvasGroupStack.Count <= 1) return;
+        if (canvasGroupStack.Count <= 1 || sendedJoinRandomRoom) return;
 
         canvasGroupStack.Pop();
         DisplayMenu();
     }
     public void MatchButton()
     {
+        sendedJoinRandomRoom = true;
         canvasGroupStack.Push(matchGroup);
         DisplayMenu();
+        PhotonNetwork.JoinRandomRoom();
+ 
+    }
+
+    public override void OnPhotonRandomJoinFailed(object[] codeAndMsg)
+    {
+        PhotonNetwork.CreateRoom(null, new RoomOptions() { MaxPlayers = AppConst.MaxPlayersPerRoom }, null);
     }
     //public void StartButton()
     //{
