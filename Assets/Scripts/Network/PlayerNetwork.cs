@@ -4,66 +4,71 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
 
-public class PlayerNetwork : MonoBehaviour
+public class PlayerNetwork : PersistentSingleton<Photon.PunBehaviour>
 {
-    public static PlayerNetwork Instance;
     private PhotonView photonView;
     private int playersInGame;
 
     //private PlayerMovement currentPlayer;
 
-    private void Awake()
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
         photonView = GetComponent<PhotonView>();
-        //SceneManager.sceneLoaded += OnSceneFinishedLoaded;
+        SceneManager.sceneLoaded += OnSceneFinishedLoaded;
 
     }
 
-    //private void OnSceneFinishedLoaded(Scene scene, LoadSceneMode mode)
-    //{
-    //    if (scene.name == "Game")
-    //    {
-    //        if (PhotonNetwork.isMasterClient)
-    //        {
-    //            MasterLoadedGame();
-    //        }
-    //        else
-    //        {
-    //            NonMasterLoadedGame();
-    //        }
-    //    }
-    //}
+    private void OnSceneFinishedLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Lv01")
+        {
+            if (PhotonNetwork.isMasterClient)
+            {
+                MasterLoadedGame();
+            }
+            else
+            {
+                NonMasterLoadedGame();
+            }
+        }
+    }
 
-    //private void MasterLoadedGame()
-    //{
-    //    photonView.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient, PhotonNetwork.player);
-    //    photonView.RPC("RPC_LoadGameOthers", PhotonTargets.Others);
+    private void MasterLoadedGame()
+    {
+        photonView.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient, PhotonNetwork.player);
+        photonView.RPC("RPC_LoadGameOthers", PhotonTargets.Others);
 
-    //}
+    }
 
-    //private void NonMasterLoadedGame()
-    //{
-    //    photonView.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient, PhotonNetwork.player);
+    private void NonMasterLoadedGame()
+    {
+        photonView.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient, PhotonNetwork.player);
 
-    //}
-    //[PunRPC]
-    //private void RPC_LoadGameOthers()
-    //{
-    //    PhotonNetwork.LoadLevel(1);
-    //}
-    //[PunRPC]
-    //private void RPC_LoadedGameScene(PhotonPlayer photonPlayer)
-    //{
-    //    PlayerManagement.Instance.AddPlayerStats(photonPlayer);
+    }
+    [PunRPC]
+    private void RPC_LoadGameOthers()
+    {
+        StartCoroutine(LoadGameOthers());
+    }
 
-    //    playersInGame++;
-    //    if (playersInGame == PhotonNetwork.playerList.Length)
-    //    {
-    //        print("All players are in the game.");
-    //        photonView.RPC("RPC_CreatePlayer", PhotonTargets.All);
-    //    }
-    //}
+    private IEnumerator LoadGameOthers() {
+        UIManager.Instance.FaderOn(true, 1f);
+        yield return new WaitForSeconds(1f);
+        LoadSceneManager.LoadScene("Lv01");
+    }
+    [PunRPC]
+    private void RPC_LoadedGameScene(PhotonPlayer photonPlayer)
+    {
+       // PlayerManagement.Instance.AddPlayerStats(photonPlayer);
+
+        //playersInGame++;
+        //if (playersInGame == PhotonNetwork.playerList.Length)
+        //{
+        //    print("All players are in the game.");
+        //    photonView.RPC("RPC_CreatePlayer", PhotonTargets.All);
+        //}
+    }
 
     //public void NewHealth(PhotonPlayer photonPlayer, int health)
     //{

@@ -20,7 +20,8 @@ public class LoadSceneManager {
         //{
         //    SceneManager.LoadScene(LoadingScreenSceneName);
         //}
-        SceneManager.LoadScene(index);
+        //SceneManager.LoadScene(index);
+        PhotonNetwork.LoadLevel(index);
         GameManager.Instance.UnPause();
     }
 

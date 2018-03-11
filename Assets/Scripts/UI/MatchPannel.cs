@@ -5,8 +5,9 @@ using UnityEngine;
 public class MatchPannel : Photon.PunBehaviour
 {
     [SerializeField]
+    private string loadSceneName = "";
+    [SerializeField]
     private GameObject content = null;
-
     [SerializeField]
     private GameObject _playerListingPerfab;
     private GameObject PlayerListingPerfab { get { return _playerListingPerfab; } }
@@ -55,5 +56,16 @@ public class MatchPannel : Photon.PunBehaviour
     public override void OnPhotonPlayerConnected(PhotonPlayer photonPlayer)
     {
         PlayerJoinedRoom(photonPlayer);
+
+        StartCoroutine(StartBattle());
+    }
+
+
+    public IEnumerator StartBattle()
+    {
+        UIManager.Instance.FaderOn(true, 1f);
+        yield return new WaitForSeconds(1f);
+        LoadSceneManager.LoadScene(loadSceneName);
     }
 }
+

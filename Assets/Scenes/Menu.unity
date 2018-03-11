@@ -4693,7 +4693,7 @@ GameObject:
   - component: {fileID: 1802796507}
   - component: {fileID: 1802796506}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Spinner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5628,6 +5628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff8736b8ff789594a895a315195abb37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadSceneName: Lv01
   content: {fileID: 933562924}
   _playerListingPerfab: {fileID: 1767464367979190, guid: 472cb606a3bef1b48b49fee8e466132b,
     type: 2}

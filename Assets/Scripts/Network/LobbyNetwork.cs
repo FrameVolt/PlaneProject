@@ -19,7 +19,7 @@ public class LobbyNetwork : Photon.PunBehaviour
 	
 	public override void OnConnectedToMaster () {
         print("connected to Master.");
-        PhotonNetwork.automaticallySyncScene = true;
+        PhotonNetwork.automaticallySyncScene = false;
         //PhotonNetwork.playerName = playerdata.playerName;
         PhotonNetwork.JoinLobby(TypedLobby.Default);
 	}
