@@ -67,6 +67,10 @@ public class MainAirplane : Photon.PunBehaviour, IHealth
        
     }
 
+    public override void OnPhotonInstantiate(PhotonMessageInfo info)
+    {
+        print("OnPhotonInstantiate");
+    }
     #region Move
     public virtual void SetHorizontalMove(float value)
     {

@@ -88,6 +88,7 @@ public class LevelDirector : Singleton<LevelDirector>
         yield return new WaitForSeconds(2);
         Instantiate(normalEnemyPerfab, normalEnemyPerfab.transform.position, Quaternion.identity);
         photonView.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient, PhotonNetwork.player);
+      
         yield return new WaitForSeconds(10);
         Instantiate(tankPerfab, tankPerfab.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(10);
@@ -101,16 +102,23 @@ public class LevelDirector : Singleton<LevelDirector>
         playersInGame++;
         if (playersInGame == PhotonNetwork.playerList.Length)
         {
-            photonView.RPC("RPC_SpawPlayer", PhotonTargets.All);
+            int id1 = PhotonNetwork.AllocateViewID();
+            photonView.RPC("RPC_SpawPlayer", PhotonTargets.AllBuffered, id1);
         }
     }
     [PunRPC]
-    private void RPC_SpawPlayer()
+    private void RPC_SpawPlayer(int id1)
     {
-        CurrentAirPlane = PhotonNetwork.Instantiate(Path.Combine("Prefabs", "MainPlane"), mainAirPlane.transform.position, Quaternion.identity,0).GetComponent<MainAirplane>();
+        CurrentAirPlane = Instantiate(mainAirPlane, mainAirPlane.transform.position, Quaternion.identity).GetComponent<MainAirplane>();
+        PhotonView nView = CurrentAirPlane.GetComponentInChildren<PhotonView>();
+        nView.viewID = id1;
         GameManager.Instance.Player = CurrentAirPlane;
         CurrentAirPlane.OnDeadEvent += OnMainPlaneDead;
     }
+    //private void OnPhotonInstantiate(PhotonMessageInfo info)
+    //{
+    //    print("OnPhotonInstantiate");
+    //}
 
     private IEnumerator RebornPlayer()
     {
