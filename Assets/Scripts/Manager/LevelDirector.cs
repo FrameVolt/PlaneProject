@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.IO;
 
 public class LevelDirector : Singleton<LevelDirector>
 {
@@ -23,7 +24,8 @@ public class LevelDirector : Singleton<LevelDirector>
     private int score;
     private int maxScore;
     private int playerLifeCount = 3;
-
+    private PhotonView photonView;
+    private int playersInGame;
     #endregion
 
     #region Properties
@@ -51,7 +53,7 @@ public class LevelDirector : Singleton<LevelDirector>
     #region Massagers
     protected override void Awake()
     {
-
+        photonView = GetComponent<PhotonView>();
     }
     private void Start()
     {
@@ -85,13 +87,29 @@ public class LevelDirector : Singleton<LevelDirector>
     {
         yield return new WaitForSeconds(2);
         Instantiate(normalEnemyPerfab, normalEnemyPerfab.transform.position, Quaternion.identity);
-        CurrentAirPlane = Instantiate(mainAirPlane, mainAirPlane.transform.position, Quaternion.identity).GetComponent<MainAirplane>();
-        GameManager.Instance.Player = CurrentAirPlane;
-        CurrentAirPlane.OnDeadEvent += OnMainPlaneDead;
+        photonView.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient, PhotonNetwork.player);
         yield return new WaitForSeconds(10);
         Instantiate(tankPerfab, tankPerfab.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(10);
         Instantiate(bossEnemyPerfab, bossEnemyPerfab.transform.position, Quaternion.identity);
+    }
+    [PunRPC]
+    private void RPC_LoadedGameScene(PhotonPlayer photonPlayer)
+    {
+        PlayerManagement.Instance.AddPlayerStats(photonPlayer);
+
+        playersInGame++;
+        if (playersInGame == PhotonNetwork.playerList.Length)
+        {
+            photonView.RPC("RPC_SpawPlayer", PhotonTargets.All);
+        }
+    }
+    [PunRPC]
+    private void RPC_SpawPlayer()
+    {
+        CurrentAirPlane = PhotonNetwork.Instantiate(Path.Combine("Prefabs", "MainPlane"), mainAirPlane.transform.position, Quaternion.identity,0).GetComponent<MainAirplane>();
+        GameManager.Instance.Player = CurrentAirPlane;
+        CurrentAirPlane.OnDeadEvent += OnMainPlaneDead;
     }
 
     private IEnumerator RebornPlayer()

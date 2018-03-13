@@ -36,14 +36,14 @@ public class PlayerNetwork : PersistentSingleton<Photon.PunBehaviour>
 
     private void MasterLoadedGame()
     {
-        photonView.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient, PhotonNetwork.player);
+        //photonView.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient, PhotonNetwork.player);
         photonView.RPC("RPC_LoadGameOthers", PhotonTargets.Others);
 
     }
 
     private void NonMasterLoadedGame()
     {
-        photonView.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient, PhotonNetwork.player);
+        //photonView.RPC("RPC_LoadedGameScene", PhotonTargets.MasterClient, PhotonNetwork.player);
 
     }
     [PunRPC]
@@ -57,9 +57,9 @@ public class PlayerNetwork : PersistentSingleton<Photon.PunBehaviour>
         yield return new WaitForSeconds(1f);
         LoadSceneManager.LoadScene("Lv01");
     }
-    [PunRPC]
-    private void RPC_LoadedGameScene(PhotonPlayer photonPlayer)
-    {
+    //[PunRPC]
+    //private void RPC_LoadedGameScene(PhotonPlayer photonPlayer)
+    //{
        // PlayerManagement.Instance.AddPlayerStats(photonPlayer);
 
         //playersInGame++;
@@ -68,7 +68,7 @@ public class PlayerNetwork : PersistentSingleton<Photon.PunBehaviour>
         //    print("All players are in the game.");
         //    photonView.RPC("RPC_CreatePlayer", PhotonTargets.All);
         //}
-    }
+    //}
 
     //public void NewHealth(PhotonPlayer photonPlayer, int health)
     //{

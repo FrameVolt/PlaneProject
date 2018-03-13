@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2125110927
+CRC: 3814485318
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5131470442b36529fc90641a7fdfa902
+    Hash: df89dfedb34e47629ad924ee9275b3a2
   TypeTreeHash:
     serializedVersion: 2
-    Hash: cf82f84655380a68359248eae78048dc
+    Hash: 137c02c8750c2291622023f32a9708c6
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -52,6 +52,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 635a4e5d4c3f4474ba93f1b331889b53, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 7d68f9afccfe02f478237b69ce24c60f, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 0f0cacff87286c14485ff2187d24f47c, type: 3}
@@ -79,4 +81,4 @@ Assets:
 - Assets/Resources/Prefabs/Crafts/BossBullet.prefab
 - Assets/Resources/Prefabs/Explosions/RetroExplosion.prefab
 Dependencies:
-- E:/UnityWorks/PlaneProject/Assets/StreamingAssets/sprites.unity3d
+- E:/lou/Lessons/Unity/PlaneProject/Assets/StreamingAssets/sprites.unity3d

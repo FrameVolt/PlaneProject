@@ -3,13 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainAirplane : MonoBehaviour, IHealth
+public class MainAirplane : Photon.PunBehaviour, IHealth
 {
+
+    public bool isLocal;
+
     [SerializeField]
     private float speed = 1f;
     [SerializeField]
     private GameObject explosionFX;
-    
 
     private Transform trans;
     private Vector3 vectorSpeed;
@@ -22,7 +24,9 @@ public class MainAirplane : MonoBehaviour, IHealth
     private float MinY;
     private int health = 100;
     private Collider2D coll;
-    
+    private Vector3 targetPosition;
+    private Quaternion targetRotation;
+
     private Weapon weapon;
 
     public delegate void OnDead();
@@ -53,21 +57,49 @@ public class MainAirplane : MonoBehaviour, IHealth
 
     private void Update()
     {
+        //isLocal = photonView.isMine;
 
+        if (!photonView.isMine) {
+            SmoothMove();
+        }
         ClampFrame();
+
+       
     }
 
     #region Move
     public virtual void SetHorizontalMove(float value)
     {
+        if (!photonView.isMine) return;
         horizontalMove = value;
     }
     public virtual void SetVerticalMove(float value)
     {
+        if (!photonView.isMine) return;
         verticalMove = value;
+    }
+    //invoke by photon
+    private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else
+        {
+            targetPosition = (Vector3)stream.ReceiveNext();
+            targetRotation = (Quaternion)stream.ReceiveNext();
+        }
+    }
+    private void SmoothMove()
+    {
+        transform.position = Vector3.Lerp(transform.position, targetPosition, 0.25f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 0.25f);
     }
     private void FixedUpdate()
     {
+        if (!photonView.isMine) return;
         Vector3 direction = new Vector3(horizontalMove, verticalMove, 0);
         Move(direction);
     }
@@ -111,7 +143,10 @@ public class MainAirplane : MonoBehaviour, IHealth
     {
         Health -= val;
         if (Health <= 0) {
-            DestroySelf();
+            if (AppConst.DebugMode == false)
+            {
+                DestroySelf();
+            }
         }
     }
 

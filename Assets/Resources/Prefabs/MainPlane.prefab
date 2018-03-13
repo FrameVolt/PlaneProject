@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 61463821087328002}
   - component: {fileID: 50798197228396542}
   - component: {fileID: 95177323246478046}
+  - component: {fileID: 114987524536625360}
   m_Layer: 0
   m_Name: MainPlane
   m_TagString: Player
@@ -134,6 +135,32 @@ MonoBehaviour:
   speed: 10
   explosionFX: {fileID: 1717921367839052, guid: 2d5ecfdb178772045a7ee68833679901,
     type: 2}
+--- !u!114 &114987524536625360
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1300247353362632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114697472533651096}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
 --- !u!212 &212839226008486812
 SpriteRenderer:
   m_ObjectHideFlags: 1

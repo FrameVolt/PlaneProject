@@ -27,7 +27,6 @@ public abstract class BulletBase : MonoBehaviour {
     {
         if (collision.GetComponent<IHealth>() != null && !collision.CompareTag(myTag)) {
             collision.GetComponent<IHealth>().Damage(power, this.gameObject);
-            print("Bullet" + collision.GetComponent<IHealth>().Health);
         }
     }
 }

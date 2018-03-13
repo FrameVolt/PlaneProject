@@ -28,14 +28,21 @@ MonoBehaviour:
   RunInBackground: 1
   RpcList:
   - Chat
+  - ColorRpc
   - DestroyRpc
+  - DoJump
+  - Flash
   - InstantiateRpc
+  - Marco
   - PickupItemInit
+  - Polo
   - PunPickup
   - PunPickupSimple
   - PunRespawn
   - RequestForPickupItems
   - RequestForPickupTimes
-  - RPC_LoadGameOthers
   - RPC_LoadedGameScene
+  - RPC_LoadGameOthers
+  - TaggedPlayer
+  - RPC_SpawPlayer
   DisableAutoOpenWizard: 1
